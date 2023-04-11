@@ -80,3 +80,114 @@ function advancedGreeting(firstName: string, lastName?: string) {
 
 console.log(advancedGreeting("Daniel", "Antunes"));
 console.log(advancedGreeting("Daniel"));
+
+// union types
+function showBalance(balance: string | number) {
+    console.log(`O saldo da conta é R$${balance}`);
+}
+
+showBalance(100);
+showBalance("500");
+// showBalance(true)
+
+const arr2: Array<number | string> = [1, "teste"];
+
+console.log(arr2);
+
+// 11 - avançando em union types
+function showUserRole(role: boolean | string) {
+    if (typeof role === "boolean") {
+        return "Usuario não aprovado!";
+    }
+
+    return `A função do usuario é ${role}`;
+}
+
+console.log(showUserRole(false));
+console.log(showUserRole("admin"));
+
+// 12 - type alias
+type ID = string | number;
+
+function showId(id: ID) {
+    console.log(`O id é ${id}`);
+}
+
+showId(1);
+showId("200");
+
+// 13 - interface
+interface Point {
+    x: number;
+    y: number;
+    z: number;
+}
+
+function showCoords(obj: Point) {
+    console.log(`x: ${obj.x}, y: ${obj.y} z: ${obj.z}`);
+}
+
+const coordObj: Point = {
+    x: 10,
+    y: 15,
+    z: 20,
+};
+
+showCoords(coordObj);
+
+// 14 - interface x typealias
+interface Person {
+    name: string;
+}
+
+interface Person {
+    age: number;
+}
+
+const somePerson: Person = { name: "Daniel", age: 30 };
+
+console.log(somePerson);
+
+type personType = {
+    name: string;
+};
+
+// type personType = {
+//     age: number
+// }
+
+// 15 - literal types
+let test: "testando";
+
+test = "testando";
+
+console.log(test);
+
+function showDirection(direction: "left" | "right" | "center") {
+    console.log(`A direção é: ${direction}`);
+}
+
+showDirection("left");
+
+// 16 - non null assertion operators
+const p = document.getElementById("some-p");
+
+console.log(p!.innerText);
+
+// 17 - bigint
+let n: bigint;
+
+//n = 1
+
+n = 1000n;
+
+console.log(n);
+
+console.log(typeof n);
+
+// 18 - symbol
+let symbolA: symbol = Symbol("a");
+let symbolB = Symbol("a");
+
+console.log(symbolA == symbolB);
+console.log(symbolA === symbolB);
