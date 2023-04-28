@@ -8,26 +8,44 @@ type Props = {
     btnText: string;
     taskList: Itask[];
     setTaskList?: React.Dispatch<React.SetStateAction<Itask[]>>;
+    task?: Itask | null;
+    handleUpdate?(id: number, title: string, difficulty: number): void;
 };
 
-const TaskForm = ({ btnText, taskList, setTaskList }: Props) => {
+const TaskForm = ({
+    btnText,
+    taskList,
+    setTaskList,
+    task,
+    handleUpdate,
+}: Props) => {
     const [id, setId] = useState<number>(0);
     const [title, setTitle] = useState<string>("");
     const [difficulty, setDifficulty] = useState<number>(0);
 
+    useEffect(() => {
+        if (task) {
+            setId(task.id);
+            setTitle(task.title);
+            setDifficulty(task.difficulty);
+        }
+    }, [task]);
+
     const addTaskHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const id = Math.floor(Math.random() * 1000);
+        if (handleUpdate) {
+            handleUpdate(id, title, difficulty);
+        } else {
+            const id = Math.floor(Math.random() * 1000);
 
-        const newTask: Itask = { id, title, difficulty };
+            const newTask: Itask = { id, title, difficulty };
 
-        setTaskList!([...taskList, newTask]);
+            setTaskList!([...taskList, newTask]);
 
-        setTitle("");
-        setDifficulty(0);
-
-        console.log(taskList);
+            setTitle("");
+            setDifficulty(0);
+        }
     };
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
