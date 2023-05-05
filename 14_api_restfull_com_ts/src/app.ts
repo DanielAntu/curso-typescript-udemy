@@ -15,9 +15,16 @@ const port = config.get<number>("port");
 // Routes
 import router from "./router";
 
+// Logger
+import logger from "../config/logger";
+
+import morganMiddleware from "./middlewares/morganMiddlewares";
+
+app.use(morganMiddleware);
+
 app.use("/api/", router);
 
 app.listen(port, async () => {
     await db();
-    console.log(`Aplicação está funcionando na porta: ${port}`);
+    logger.info(`Aplicação está funcionando na porta: ${port}`);
 });
